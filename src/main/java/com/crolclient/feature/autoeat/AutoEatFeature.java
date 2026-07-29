@@ -31,28 +31,22 @@ public class AutoEatFeature extends Feature {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (!isEnabled() || client.player == null || client.interactionManager == null) return;
 
-            // Проверяем уровень голода игрока (если меньше или равен 14 из 20, то можно есть)
-            if (client.player.getHungerManager().isFoodLevelInsufficient()) {
-                // Ищем еду в инвентаре или руках
-                for (int i = 0; i < 9; i++) { // Проверяем хотбар
+            // Проверяем уровень сытости (если меньше 20, персонаж может есть)
+            if (client.player.getHungerManager().getFoodLevel() < 20) {
+                // Ищем съедобный предмет в хотбаре (слоты 0-8)
+                for (int i = 0; i < 9; i++) {
                     ItemStack stack = client.player.getInventory().getStack(i);
                     
-                    // Проверка через DataComponentTypes.FOOD для Minecraft 1.21
+                    // Безопасная проверка еды через компонент для версии 1.21
                     if (stack.contains(DataComponentTypes.FOOD)) {
-                        int oldSlot = client.player.getInventory().selectedSlot;
                         client.player.getInventory().selectedSlot = i;
-                        
-                        // Симулируем удержание кнопки использования предмета (правый клик)
+                        // Зажимаем правую кнопку мыши (использование предмета)
                         client.options.useKey.setPressed(true);
-                        
-                        // Возвращаем слот обратно (или оставляем, в зависимости от твоей логики)
-                        // client.interactionManager.interactItem(client.player, net.minecraft.util.Hand.MAIN_HAND);
-                        
                         break;
                     }
                 }
             } else {
-                // Отпускаем кнопку, когда сыт
+                // Когда сытость полная, отпускаем кнопку
                 if (client.options.useKey.isPressed()) {
                     client.options.useKey.setPressed(false);
                 }
