@@ -1,4 +1,4 @@
-package com.crolclient.mixin;
+package com.crolclient.mixin.entity;
 
 import com.crolclient.config.ConfigManager;
 import net.minecraft.client.MinecraftClient;
@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientPlayerEntity.class)
 public class ClientPlayerEntityMixin {
+
     @Inject(method = "tick", at = @At("TAIL"))
     private void onTick(CallbackInfo ci) {
         ClientPlayerEntity player = (ClientPlayerEntity) (Object) this;
@@ -35,6 +36,7 @@ public class ClientPlayerEntityMixin {
                 && client.interactionManager != null) {
             for (int i = 0; i < 9; i++) {
                 ItemStack stack = player.getInventory().getStack(i);
+                // Исправлено: проверка еды через компонент для Minecraft 1.21
                 if (stack.contains(DataComponentTypes.FOOD)) {
                     int prevSlot = player.getInventory().selectedSlot;
                     player.getInventory().selectedSlot = i;
@@ -44,5 +46,11 @@ public class ClientPlayerEntityMixin {
                 }
             }
         }
+    }
+
+    // Исправлено: добавлен дескриптор метода jump()V, чтобы убрать предупреждение
+    @Inject(method = "jump()V", at = @At("TAIL"))
+    private void onJump(CallbackInfo ci) {
+        // Логика прыжка, если нужна
     }
 }
