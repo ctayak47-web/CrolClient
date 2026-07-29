@@ -3,6 +3,7 @@ package com.crolclient.mixin.screen;
 import com.crolclient.config.ConfigManager;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -25,13 +26,15 @@ public class TitleScreenMixin {
         if (ConfigManager.getConfig().customBackgroundEnabled) {
             int idx = Integer.parseInt(ConfigManager.getConfig().customBackgroundMode) - 1;
             if (idx >= 0 && idx < BG.length) {
-                context.drawTexture(BG[idx], 0, 0, 0, 0,
+                context.drawTexture(
+                    RenderLayer::getGuiTextured,
+                    BG[idx],
+                    0, 0,
+                    0.0f, 0.0f,
                     context.getScaledWindowWidth(), context.getScaledWindowHeight(),
-                    context.getScaledWindowWidth(), context.getScaledWindowHeight());
+                    context.getScaledWindowWidth(), context.getScaledWindowHeight()
+                );
             }
         }
-        // Steve icon in top-left corner of main menu (decorative)
-        // Only render if texture exists
-        // context.drawTexture(STEVE, 10, 10, 0, 0, 32, 32, 32, 32);
     }
 }
