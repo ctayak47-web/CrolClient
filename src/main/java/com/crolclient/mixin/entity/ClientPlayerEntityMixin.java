@@ -1,9 +1,9 @@
 package com.crolclient.mixin.entity;
 
 import com.crolclient.config.ConfigManager;
-import com.crolclient.sound.SoundManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ClientPlayerEntity.class)
 public class ClientPlayerEntityMixin {
+
     @Inject(method = "tick", at = @At("TAIL"))
     private void onTick(CallbackInfo ci) {
         ClientPlayerEntity player = (ClientPlayerEntity) (Object) this;
@@ -20,7 +21,10 @@ public class ClientPlayerEntityMixin {
 
         // Auto Sprint
         if (ConfigManager.getConfig().autoSprintEnabled) {
-            if (player.input.movementForward > 0 && !player.isSprinting() && !player.isSneaking() && !player.isUsingItem()) {
+            if (player.input.movementForward > 0
+                    && !player.isSprinting()
+                    && !player.isSneaking()
+                    && !player.isUsingItem()) {
                 player.setSprinting(true);
             }
         }
@@ -28,10 +32,11 @@ public class ClientPlayerEntityMixin {
         // Auto Eat
         if (ConfigManager.getConfig().autoEatEnabled
                 && player.getHungerManager().getFoodLevel() <= ConfigManager.getConfig().autoEatThreshold
-                && !player.isUsingItem() && client.interactionManager != null) {
+                && !player.isUsingItem()
+                && client.interactionManager != null) {
             for (int i = 0; i < 9; i++) {
                 ItemStack stack = player.getInventory().getStack(i);
-                if (stack.isFood()) {
+                if (stack.contains(DataComponentTypes.FOOD)) {
                     int prevSlot = player.getInventory().selectedSlot;
                     player.getInventory().selectedSlot = i;
                     client.interactionManager.interactItem(player, Hand.MAIN_HAND);
@@ -40,28 +45,10 @@ public class ClientPlayerEntityMixin {
                 }
             }
         }
-
-        // Low HP sound
-        if (ConfigManager.getConfig().lowHpSoundEnabled && player.getHealth() <= 6.0f) {
-            SoundManager.playLowHP();
-        }
     }
 
-    @Inject(method = "requestRespawn", at = @At("HEAD"))
-    private void onDeath(CallbackInfo ci) {
-        if (ConfigManager.getConfig().customDeathSoundEnabled) {
-            SoundManager.playDeath(ConfigManager.getConfig().customDeathSoundMode);
-        }
-    }
-
-    @Inject(method = "jump", at = @At("TAIL"))
+    @Inject(method = "jump()V", at = @At("TAIL"))
     private void onJump(CallbackInfo ci) {
-        if (ConfigManager.getConfig().jumpEffectEnabled) {
-            ClientPlayerEntity player = (ClientPlayerEntity) (Object) this;
-            if (player.getWorld() != null) {
-                player.getWorld().addParticle(net.minecraft.particle.ParticleTypes.END_ROD,
-                    player.getX(), player.getY(), player.getZ(), 0, 0.1, 0);
-            }
-        }
+        // Jump hook
     }
 }
