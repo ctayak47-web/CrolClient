@@ -1,0 +1,22 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.crolclient.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "MinecraftClientMixin",
+    "InGameHudMixin",
+    "GameRendererMixin",
+    "entity.ClientPlayerEntityMixin",
+    "entity.LivingEntityRendererMixin",
+    "entity.LivingEntityMixin",
+    "entity.ArrowEntityRendererMixin",
+    "world.WorldRendererMixin",
+    "render.HeldItemRendererMixin",
+    "sound.ClientPlayerInteractionManagerMixin",
+    "screen.TitleScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
