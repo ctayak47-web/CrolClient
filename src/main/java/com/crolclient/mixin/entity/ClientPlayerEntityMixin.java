@@ -47,8 +47,8 @@ public class ClientPlayerEntityMixin {
         }
     }
 
-    @Inject(method = "jump()V", at = @At("TAIL"))
+    @Inject(method = "jump", at = @At("TAIL"))
     private void onJump(CallbackInfo ci) {
         // Jump hook
     }
-}
+    }
