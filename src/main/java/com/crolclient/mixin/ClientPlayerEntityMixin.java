@@ -3,6 +3,7 @@ package com.crolclient.mixin;
 import com.crolclient.config.ConfigManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,7 +35,7 @@ public class ClientPlayerEntityMixin {
                 && client.interactionManager != null) {
             for (int i = 0; i < 9; i++) {
                 ItemStack stack = player.getInventory().getStack(i);
-                if (stack.isFood()) {
+                if (stack.contains(DataComponentTypes.FOOD)) {
                     int prevSlot = player.getInventory().selectedSlot;
                     player.getInventory().selectedSlot = i;
                     client.interactionManager.interactItem(player, Hand.MAIN_HAND);
