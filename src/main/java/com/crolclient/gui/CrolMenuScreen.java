@@ -9,6 +9,7 @@ import com.crolclient.render.GlassmorphismRenderer;
 import com.crolclient.sound.SoundManager;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
@@ -60,7 +61,14 @@ public class CrolMenuScreen extends Screen {
         renderBackground(context, mouseX, mouseY, delta);
 
         // Background image (backgui.png) stretched to screen
-        context.drawTexture(BACKGUI, 0, 0, 0, 0, width, height, width, height);
+        context.drawTexture(
+            RenderLayer::getGuiTextured,
+            BACKGUI,
+            0, 0,
+            0.0f, 0.0f,
+            width, height,
+            width, height
+        );
 
         // Glass overlay on top
         GlassmorphismRenderer.renderBackground(context, width, height);
