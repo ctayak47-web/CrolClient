@@ -1,0 +1,29 @@
+# Gradle
+.gradle/
+build/
+out/
+
+# IDE
+.idea/
+.classpath
+.project
+.settings/
+eclipse.classpath
+*.launch
+*.iml
+*.iws
+*.ipr
+
+# OS
+.DS_Store
+thumbs.db
+
+# Minecraft
+run/
+mods/
+config/
+*.zip
+
+# Environment
+.env
+.env.local
