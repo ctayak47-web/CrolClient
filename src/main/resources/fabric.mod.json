@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "id": "doublechest-buyer",
+  "id": "crolclient",
   "version": "${version}",
-  "name": "Double Chest Buyer",
-  "description": "A buyer mod with double chest GUI, categories, and hot items",
+  "name": "Crol Client",
+  "description": "A buyer mod with double chest GUI",
   "authors": ["DoubleChest Team"],
   "contact": {},
   "license": "MIT",
   "icon": "assets/doublechest/icon.png",
   "environment": "client",
   "entrypoints": {
-    "main": ["com.doublechest.buyer.DoubleChestBuyerMod"]
+    "main": ["com.crolclient.buyer.DoubleChestBuyerMod"]
   },
-  "mixins": ["doublechest.mixins.json"],
+  "mixins": ["crolclient.mixins.json"],
   "depends": {
     "fabricloader": ">=0.16.0",
     "fabric-api": "*",
