@@ -1,4 +1,3 @@
-
 package CrolClient.visual;
 
 import by.saskkeee.annotations.CompileToNative;
@@ -35,7 +34,7 @@ import CrolClient.visual.utility.render.display.shader.GlProgram;
 public enum CrolClientVisual {
     INSTANCE;
 
-    public static final String NAME = "Vurst Visual";
+    public static final String NAME = "CrolClient Visual";
     public static final String VER = "2.0";
     public static final String TYPE = "DEV";
     private static final String MOD_ID = "CrolClientvisual";
