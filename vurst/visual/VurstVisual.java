@@ -1,5 +1,4 @@
-
-package vurst.visual;
+package com.crolclient.visual;
 
 import by.saskkeee.annotations.CompileToNative;
 import by.saskkeee.annotations.Entrypoint;
@@ -14,31 +13,31 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.Identifier;
 import net.minecraft.ResourceType;
 import net.minecraft.ResourceManager;
-import vurst.visual.base.comand.CommandManager;
-import vurst.visual.base.config.ConfigManager;
-import vurst.visual.base.filemanager.impl.BlacklistManager;
-import vurst.visual.base.filemanager.impl.FriendManager;
-import vurst.visual.base.filemanager.impl.StaffManager;
-import vurst.visual.base.modules.ModuleManager;
-import vurst.visual.base.request.ScriptManager;
-import vurst.visual.base.rotation.RotationManager;
-import vurst.visual.base.rotation.deeplearnig.DeepLearningManager;
-import vurst.visual.base.theme.ThemeManager;
-import vurst.visual.client.screens.menu.MenuScreen;
-import vurst.visual.utility.discord.DiscordRpcService;
-import vurst.visual.utility.game.server.ServerHandler;
-import vurst.visual.utility.input.KeybindManager;
-import vurst.visual.utility.render.display.shader.DrawUtil;
-import vurst.visual.utility.render.display.shader.GlProgram;
+import com.crolclient.visual.base.comand.CommandManager;
+import com.crolclient.visual.base.config.ConfigManager;
+import com.crolclient.visual.base.filemanager.impl.BlacklistManager;
+import com.crolclient.visual.base.filemanager.impl.FriendManager;
+import com.crolclient.visual.base.filemanager.impl.StaffManager;
+import com.crolclient.visual.base.modules.ModuleManager;
+import com.crolclient.visual.base.request.ScriptManager;
+import com.crolclient.visual.base.rotation.RotationManager;
+import com.crolclient.visual.base.rotation.deeplearnig.DeepLearningManager;
+import com.crolclient.visual.base.theme.ThemeManager;
+import com.crolclient.visual.client.screens.menu.MenuScreen;
+import com.crolclient.visual.utility.discord.DiscordRpcService;
+import com.crolclient.visual.utility.game.server.ServerHandler;
+import com.crolclient.visual.utility.input.KeybindManager;
+import com.crolclient.visual.utility.render.display.shader.DrawUtil;
+import com.crolclient.visual.utility.render.display.shader.GlProgram;
 
 @Entrypoint
-public enum VurstVisual {
+public enum CrolClient {
     INSTANCE;
 
-    public static final String NAME = "Vurst Visual";
+    public static final String NAME = "CrolClient";
     public static final String VER = "2.0";
     public static final String TYPE = "DEV";
-    private static final String MOD_ID = "vurstvisual";
+    private static final String MOD_ID = "crolclient";
     public static final File DIRECTORY;
     private ModuleManager moduleManager;
     private ThemeManager themeManager;
@@ -59,7 +58,7 @@ public enum VurstVisual {
         if (!DIRECTORY.exists()) {
             DIRECTORY.mkdirs();
         }
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> VurstVisual.getInstance().shutdown()));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> CrolClient.getInstance().shutdown()));
         this.blacklistManager = new BlacklistManager();
         this.friendManager = new FriendManager();
         this.staffManager = new StaffManager();
@@ -69,7 +68,7 @@ public enum VurstVisual {
         this.deepLearningManager = new DeepLearningManager();
         this.rotationManager = new RotationManager();
         this.commandManager = new CommandManager();
-        this.scriptManager = new ScriptManager();
+        this.scriptmanagerInit();
         KeybindManager.init();
         this.menuScreen = new MenuScreen();
         DiscordRpcService.start();
@@ -79,13 +78,18 @@ public enum VurstVisual {
         ResourceManagerHelper.get((ResourceType)ResourceType.CLIENT_RESOURCES).registerReloadListener((IdentifiableResourceReloadListener)new SimpleSynchronousResourceReloadListener(this){
 
             public Identifier getFabricId() {
-                return VurstVisual.id("after_shader_load");
+                return CrolClient.id("after_shader_load");
             }
 
             public void reload(ResourceManager manager) {
                 GlProgram.loadAndSetupPrograms();
             }
         });
+    }
+
+    private void scriptmanagerInit() {
+        // maintain original initialization order for ScriptManager
+        this.scriptManager = new ScriptManager();
     }
 
     public void shutdown() {
@@ -97,10 +101,10 @@ public enum VurstVisual {
     }
 
     public static Identifier id(String path) {
-        return Identifier.of((String)MOD_ID, (String)path);
+        return Identifier.of(MOD_ID, path);
     }
 
-    public static VurstVisual getInstance() {
+    public static CrolClient getInstance() {
         return INSTANCE;
     }
 
@@ -165,7 +169,6 @@ public enum VurstVisual {
     }
 
     static {
-        DIRECTORY = FabricLoader.getInstance().getGameDir().resolve(".vurstvisual").toFile();
+        DIRECTORY = FabricLoader.getInstance().getGameDir().resolve(".crolclient").toFile();
     }
 }
-
