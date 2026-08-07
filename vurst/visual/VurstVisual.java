@@ -1,4 +1,5 @@
-package com.crolclient.visual;
+
+package CrolClient.visual;
 
 import by.saskkeee.annotations.CompileToNative;
 import by.saskkeee.annotations.Entrypoint;
@@ -13,31 +14,31 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.Identifier;
 import net.minecraft.ResourceType;
 import net.minecraft.ResourceManager;
-import com.crolclient.visual.base.comand.CommandManager;
-import com.crolclient.visual.base.config.ConfigManager;
-import com.crolclient.visual.base.filemanager.impl.BlacklistManager;
-import com.crolclient.visual.base.filemanager.impl.FriendManager;
-import com.crolclient.visual.base.filemanager.impl.StaffManager;
-import com.crolclient.visual.base.modules.ModuleManager;
-import com.crolclient.visual.base.request.ScriptManager;
-import com.crolclient.visual.base.rotation.RotationManager;
-import com.crolclient.visual.base.rotation.deeplearnig.DeepLearningManager;
-import com.crolclient.visual.base.theme.ThemeManager;
-import com.crolclient.visual.client.screens.menu.MenuScreen;
-import com.crolclient.visual.utility.discord.DiscordRpcService;
-import com.crolclient.visual.utility.game.server.ServerHandler;
-import com.crolclient.visual.utility.input.KeybindManager;
-import com.crolclient.visual.utility.render.display.shader.DrawUtil;
-import com.crolclient.visual.utility.render.display.shader.GlProgram;
+import CrolClient.visual.base.comand.CommandManager;
+import CrolClient.visual.base.config.ConfigManager;
+import CrolClient.visual.base.filemanager.impl.BlacklistManager;
+import CrolClient.visual.base.filemanager.impl.FriendManager;
+import CrolClient.visual.base.filemanager.impl.StaffManager;
+import CrolClient.visual.base.modules.ModuleManager;
+import CrolClient.visual.base.request.ScriptManager;
+import CrolClient.visual.base.rotation.RotationManager;
+import CrolClient.visual.base.rotation.deeplearnig.DeepLearningManager;
+import CrolClient.visual.base.theme.ThemeManager;
+import CrolClient.visual.client.screens.menu.MenuScreen;
+import CrolClient.visual.utility.discord.DiscordRpcService;
+import CrolClient.visual.utility.game.server.ServerHandler;
+import CrolClient.visual.utility.input.KeybindManager;
+import CrolClient.visual.utility.render.display.shader.DrawUtil;
+import CrolClient.visual.utility.render.display.shader.GlProgram;
 
 @Entrypoint
-public enum CrolClient {
+public enum CrolClientVisual {
     INSTANCE;
 
-    public static final String NAME = "CrolClient";
+    public static final String NAME = "Vurst Visual";
     public static final String VER = "2.0";
     public static final String TYPE = "DEV";
-    private static final String MOD_ID = "crolclient";
+    private static final String MOD_ID = "CrolClientvisual";
     public static final File DIRECTORY;
     private ModuleManager moduleManager;
     private ThemeManager themeManager;
@@ -58,7 +59,7 @@ public enum CrolClient {
         if (!DIRECTORY.exists()) {
             DIRECTORY.mkdirs();
         }
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> CrolClient.getInstance().shutdown()));
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> CrolClientVisual.getInstance().shutdown()));
         this.blacklistManager = new BlacklistManager();
         this.friendManager = new FriendManager();
         this.staffManager = new StaffManager();
@@ -68,7 +69,7 @@ public enum CrolClient {
         this.deepLearningManager = new DeepLearningManager();
         this.rotationManager = new RotationManager();
         this.commandManager = new CommandManager();
-        this.scriptmanagerInit();
+        this.scriptManager = new ScriptManager();
         KeybindManager.init();
         this.menuScreen = new MenuScreen();
         DiscordRpcService.start();
@@ -78,18 +79,13 @@ public enum CrolClient {
         ResourceManagerHelper.get((ResourceType)ResourceType.CLIENT_RESOURCES).registerReloadListener((IdentifiableResourceReloadListener)new SimpleSynchronousResourceReloadListener(this){
 
             public Identifier getFabricId() {
-                return CrolClient.id("after_shader_load");
+                return CrolClientVisual.id("after_shader_load");
             }
 
             public void reload(ResourceManager manager) {
                 GlProgram.loadAndSetupPrograms();
             }
         });
-    }
-
-    private void scriptmanagerInit() {
-        // maintain original initialization order for ScriptManager
-        this.scriptManager = new ScriptManager();
     }
 
     public void shutdown() {
@@ -101,10 +97,10 @@ public enum CrolClient {
     }
 
     public static Identifier id(String path) {
-        return Identifier.of(MOD_ID, path);
+        return Identifier.of((String)MOD_ID, (String)path);
     }
 
-    public static CrolClient getInstance() {
+    public static CrolClientVisual getInstance() {
         return INSTANCE;
     }
 
@@ -169,6 +165,6 @@ public enum CrolClient {
     }
 
     static {
-        DIRECTORY = FabricLoader.getInstance().getGameDir().resolve(".crolclient").toFile();
+        DIRECTORY = FabricLoader.getInstance().getGameDir().resolve(".CrolClientvisual").toFile();
     }
 }

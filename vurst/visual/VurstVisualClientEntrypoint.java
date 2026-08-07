@@ -1,13 +1,12 @@
 
-package vurst.visual;
+package CrolClient.visual;
 
 import net.fabricmc.api.ClientModInitializer;
-import vurst.visual.utility.input.KeybindManager;
+import CrolClient.visual.utility.input.KeybindManager;
 
-public final class VurstVisualClientEntrypoint
+public final class CrolClientVisualClientEntrypoint
 implements ClientModInitializer {
     public void onInitializeClient() {
         KeybindManager.init();
     }
 }
-
