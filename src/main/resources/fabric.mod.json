@@ -2,20 +2,25 @@
   "schemaVersion": 1,
   "id": "crolclient",
   "version": "${version}",
-  "name": "Crol Client",
-  "description": "A buyer mod with double chest GUI",
-  "authors": ["DoubleChest Team"],
+  "name": "CrolClient",
+  "description": "Visual client mod for Minecraft 1.21.4 with glassmorphism UI, Plintus-style visuals",
+  "authors": ["CrolTeam"],
   "contact": {},
   "license": "MIT",
-  "icon": "assets/doublechest/icon.png",
+  "icon": "assets/crolclient/icon.png",
   "environment": "client",
   "entrypoints": {
-    "main": ["com.crolclient.buyer.DoubleChestBuyerMod"]
+    "client": [
+      "com.crolclient.CrolClientClient"
+    ]
   },
-  "mixins": ["crolclient.mixins.json"],
+  "mixins": [
+    "crolclient.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=0.16.0",
-    "fabric-api": "*",
-    "minecraft": "1.21.4"
+    "minecraft": "~1.21.4",
+    "java": ">=21",
+    "fabric-api": "*"
   }
 }
