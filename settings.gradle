@@ -5,4 +5,4 @@ pluginManagement {
     }
 }
 
-rootProject.name = "vurst-visual-client"
+rootProject.name = "CrolClient-visual-client"
