@@ -1,0 +1,16 @@
+
+package org.freedesktop.dbus.exceptions;
+
+import org.freedesktop.dbus.exceptions.DBusException;
+import org.freedesktop.dbus.interfaces.NonFatalException;
+
+public class MessageFormatException
+extends DBusException
+implements NonFatalException {
+    private static final long serialVersionUID = -4806500517504320924L;
+
+    public MessageFormatException(String _message) {
+        super(_message);
+    }
+}
+

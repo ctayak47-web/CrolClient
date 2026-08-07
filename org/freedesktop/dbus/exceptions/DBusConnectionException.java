@@ -1,0 +1,29 @@
+
+package org.freedesktop.dbus.exceptions;
+
+import org.freedesktop.dbus.exceptions.DBusException;
+
+public class DBusConnectionException
+extends DBusException {
+    private static final long serialVersionUID = -1L;
+
+    public DBusConnectionException() {
+    }
+
+    public DBusConnectionException(String _message, Throwable _cause, boolean _enableSuppression, boolean _writableStackTrace) {
+        super(_message, _cause, _enableSuppression, _writableStackTrace);
+    }
+
+    public DBusConnectionException(String _message, Throwable _cause) {
+        super(_message, _cause);
+    }
+
+    public DBusConnectionException(String _message) {
+        super(_message);
+    }
+
+    public DBusConnectionException(Throwable _cause) {
+        super(_cause);
+    }
+}
+
