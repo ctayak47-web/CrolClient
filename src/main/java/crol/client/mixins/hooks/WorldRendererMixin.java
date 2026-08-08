@@ -34,30 +34,30 @@ public abstract class WorldRendererMixin implements IWorldRendererMixin {
     @Shadow
     private Frustum frustum;
 
-    @Inject(
-            method = "drawBlockOutline",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    private void drawBlockOutline(MatrixStack matrices, VertexConsumer vertexConsumer, Entity entity, double cameraX, double cameraY, double cameraZ, BlockPos pos, BlockState state, int color, CallbackInfo ci) {
-        BlockOutline blockOutline = (BlockOutline) CrolClient.INSTANCE.getModuleManager().getByClass(BlockOutline.class);
-
-        if (blockOutline.isEnabled()) {
-            BlockOutline.render(matrices, pos, blockOutline.fill.getValue());
-        } else {
-            VertexRendering.drawOutline(
-                    matrices,
-                    vertexConsumer,
-                    state.getOutlineShape(MinecraftClient.getInstance().world, pos, ShapeContext.of(entity)),
-                    (double)pos.getX() - cameraX,
-                    (double)pos.getY() - cameraY,
-                    (double)pos.getZ() - cameraZ,
-                    color
-            );
-        }
-
-        ci.cancel();
-    }
+    // @Inject(
+    //         method = "drawBlockOutline",
+    //         at = @At("HEAD"),
+    //         cancellable = true
+    // )
+    // private void drawBlockOutline(MatrixStack matrices, VertexConsumer vertexConsumer, Entity entity, double cameraX, double cameraY, double cameraZ, BlockPos pos, BlockState state, int color, CallbackInfo ci) {
+    //     BlockOutline blockOutline = (BlockOutline) CrolClient.INSTANCE.getModuleManager().getByClass(BlockOutline.class);
+    //
+    //     if (blockOutline.isEnabled()) {
+    //         BlockOutline.render(matrices, pos, blockOutline.fill.getValue());
+    //     } else {
+    //         VertexRendering.drawOutline(
+    //                 matrices,
+    //                 vertexConsumer,
+    //                 state.getOutlineShape(MinecraftClient.getInstance().world, pos, ShapeContext.of(entity)),
+    //                 (double)pos.getX() - cameraX,
+    //                 (double)pos.getY() - cameraY,
+    //                 (double)pos.getZ() - cameraZ,
+    //                 color
+    //         );
+    //     }
+    //
+    //     ci.cancel();
+    // }
 
     @Override
     public Frustum crol$getFrustum() {
