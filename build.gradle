@@ -9,10 +9,10 @@ repositories {
 
 dependencies {
     minecraft "com.mojang:minecraft:1.21.4"
-    mappings files("libs/yarn-mappings.jar")
+    mappings loom.officialMojangMappings()  // ← вместо yarn-mappings.jar
     modImplementation "net.fabricmc:fabric-loader:0.16.14"
     modImplementation "net.fabricmc.fabric-api:fabric-api:0.119.4+1.21.4"
-    modRuntimeOnly files("libs/Vurst-Visual-patched.jar")
+    // удалите Vurst-Visual если не нужен
 }
 
 java {
