@@ -6,5 +6,5 @@ import net.minecraft.client.render.Frustum;
 
 @Environment(EnvType.CLIENT)
 public interface IWorldRendererMixin {
-   Frustum getFrustum();
+   Frustum crol$getFrustum();
 }

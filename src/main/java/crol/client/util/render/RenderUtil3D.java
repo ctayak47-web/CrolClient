@@ -67,7 +67,7 @@ public class RenderUtil3D implements IUtil {
 
     public boolean canSee(Box box) {
         if (box == null || mc.worldRenderer == null) return false;
-        Frustum frustum = ((IWorldRendererMixin) mc.worldRenderer).getFrustum();
+        Frustum frustum = ((IWorldRendererMixin) mc.worldRenderer).crol$getFrustum();
         return frustum != null && frustum.isVisible(box);
     }
 

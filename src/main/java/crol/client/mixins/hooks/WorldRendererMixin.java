@@ -60,7 +60,7 @@ public abstract class WorldRendererMixin implements IWorldRendererMixin {
     }
 
     @Override
-    public Frustum getFrustum() {
+    public Frustum crol$getFrustum() {
         return this.frustum;
     }
 
