@@ -1,0 +1,52 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "ru.crolclient.mixins",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AbstractBlockMixin",
+    "ChatInputSuggestorMixin",
+    "ClientConnectionMixin",
+    "ClientPlayerEntityMixin",
+    "ClientPlayerInteractionManagerMixin",
+    "ClientPlayNetworkHandlerMixin",
+    "EntityMixin",
+    "FireworkRocketEntityMixin",
+    "InGameOverlayRendererMixin",
+    "ItemMixin",
+    "KeyboardMixin",
+    "MouseInputMixin",
+    "LivingEntityMixin",
+    "MinecraftServerMixin",
+    "PlayerEntityMixin",
+    "accessors.LivingEntityAccessor",
+    "InGameHudMixin",
+    "PlayerEntityRendererMixin",
+    "SplashOverlayMixin",
+    "LightmapTextureManagerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "CameraMixin",
+    "ChatScreenMixin",
+    "DeathScreenMixin",
+    "GameRendererMixin",
+    "HandledScreenMixin",
+    "HeldItemRendererMixin",
+    "InGameMixin",
+    "InputMixin",
+    "KeyboardInputMixin",
+    "MinecraftClientMixin",
+    "ScreenMixin",
+    "ShaderProgramMixin",
+    "TitleScreenMixin",
+    "WorldRendererMixin",
+    "accessors.GameRendererAccessor",
+    "accessors.MinecraftClientAccessor",
+    "accessors.NativeImageAccessor",
+    "accessors.ShaderProgramAccessor",
+    "accessors.TypeAccessor"
+  ]
+}

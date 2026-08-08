@@ -1,29 +1,34 @@
+
 {
+  "accessWidener": "crolclient.accesswidener",
   "schemaVersion": 1,
-  "id": "crol",
-  "version": "1.0-SNAPSHOT",
-  "name": "Crol",
-  "description": "",
-  "authors": [],
-  "contact": {},
+  "id": "crolclient-client",
+  "version": "0.1",
+  "name": "crolclient",
+  "description": "MinecraftClient Hacked client",
+  "authors": [
+    "j3fferson",
+    "dedinside"
+  ],
+  "contact": {
+    "website": "https://extraclient.su",
+    "repo": "none"
+  },
   "license": "All-Rights-Reserved",
-  "icon": "assets/crol/icon.png",
-
-  "environment": "client",
-
+  "environment": "*",
   "entrypoints": {
-    "client": [
-      "crol.client.CrolClient"
+    "main": [
+      "ru.crolclient.core.Extra"
     ]
   },
-
   "mixins": [
-    "crol.client.mixins.json"
+    "extra-client.mixins.json"
   ],
 
   "depends": {
-    "fabricloader": ">=0.18.4",
+    "fabricloader": ">=0.15.11",
     "fabric": "*",
-    "minecraft": "1.21.4"
+    "minecraft": ">=1.21.4",
+    "java": ">=21"
   }
 }
