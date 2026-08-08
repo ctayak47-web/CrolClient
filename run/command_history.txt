@@ -1,4 +1,0 @@
-/give golden_apple
-/give ender_pearl 22
-/ac
-/god

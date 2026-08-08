@@ -2,34 +2,42 @@ name: Build
 
 on:
   push:
+    branches: [ "main", "master" ]
   pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        java-version: [21]
     runs-on: ubuntu-latest
+
+    # Все команды выполняем из папки Xyeta, т.к. build.gradle лежит там
+    defaults:
+      run:
+        working-directory: Xyeta
+
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Set up JDK ${{ matrix.java-version }}
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: ${{ matrix.java-version }}
-          distribution: 'temurin'
-      
-      - name: Build with Gradle
+          java-version: '21'
+          distribution: 'microsoft'
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: wrapper
-      
-      - name: Run gradle build
-        run: gradle build
-      
-      - name: Upload artifacts
-        if: success()
+
+      - name: Build with Gradle
+        run: ./gradlew build --stacktrace
+
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: jar-${{ matrix.java-version }}
-          path: build/libs/
+          name: Xyeta-build
+          path: Xyeta/build/libs/*.jar
+          if-no-files-found: error

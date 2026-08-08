@@ -1,0 +1,59 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "crol.client.mixins.hooks",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "AbstractClientPlayerEntityMixin",
+    "BackgroundRendererMixin",
+    "CameraMixin",
+    "ChatScreenMixin",
+    "ClientChunkManagerMixin",
+    "ClientPlayerInteractionManagerMixin",
+    "ClientPlayerMixin",
+    "ClientPlayNetworkHandlerMixin",
+    "ClientWorldMixin",
+    "DeathScreenMixin",
+    "ElytraEntityModelMixin",
+    "ElytraFeatureRendererMixin",
+    "EntityRendererMixin",
+    "GameRendererMixin",
+    "HandledScreenMixin",
+    "HeldItemRendererMixin",
+    "InGameHudMixin",
+    "InGameOverlayRendererMixin",
+    "KeyboardInputMixin",
+    "KeyboardMixin",
+    "LightmapTextureManagerMixin",
+    "LivingEntityRendererMixin",
+    "MinecraftClientMixin",
+    "MouseMixin",
+    "PlayerEntityRendererMixin",
+    "SkyRenderingMixin",
+    "TitleScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "mixins": [
+    "BlockItemMixin",
+    "ClientCommandC2SPacketMixin",
+    "ClientConnectionMixin",
+    "EntityMixin",
+    "FlowableFluidMixin",
+    "ItemStackAccessor",
+    "PlayerInteractBlockC2SPacketMixin",
+    "PlayerInteractEntityC2SPacketMixin",
+    "PlayerInteractItemC2SPacketMixin",
+    "PlayerMoveC2SPacketMixin",
+    "MixinGameRenderer",
+    "PlayerPositionMixin",
+    "TextVisitFactoryMixin",
+    "LivingEntityMixin",
+    "WorldRendererMixin",
+    "Vec3dMixin"
+  ]
+}
