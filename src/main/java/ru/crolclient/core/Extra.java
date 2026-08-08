@@ -114,10 +114,14 @@ public class Extra implements ModInitializer {
     public void initMacro() {
         macroRepository = new MacroRepository(eventManager);
     }
-
+    // 
     public void initDiscordRPC() {
-        discordManager = new DiscordManager();
-        discordManager.init();
+        try {
+            discordManager = new DiscordManager();
+            discordManager.init();
+        } catch (Throwable e) {
+            // Discord RPC not available on this platform
+        }
     }
 
     public void initClientInfoProvider() {
