@@ -9,6 +9,7 @@ import requests
 from . import storage
 from .analyzer import RegistrationAnalyzer, MILESTONES
 from .templates import generate_txt_report, generate_html_report
+from .inline import InlineHandler, build_inline_results
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -44,6 +45,7 @@ class TelegramBot:
         self.base_url = f"https://api.telegram.org/bot{token}"
         self.admin_id = admin_id
         self.analyzer = RegistrationAnalyzer(MILESTONES)
+        self.inline_handler = InlineHandler()
         self.user_states: Dict[int, Optional[str]] = {}
         self.user_data: Dict[int, dict] = {}
         self.user_messages: Dict[int, int] = {}
@@ -106,6 +108,16 @@ class TelegramBot:
         if text:
             params["text"] = text
         return self._make_request("answerCallbackQuery", params)
+
+    def answer_inline_query(self, inline_query_id: str, results: list, cache_time: int = 300) -> Optional[Dict]:
+        """Ответить на инлайн-запрос результатами."""
+        params = {
+            "inline_query_id": inline_query_id,
+            "results": results,
+            "cache_time": cache_time,
+            "is_personal": False
+        }
+        return self._make_request("answerInlineQuery", params)
 
     # ─── keyboards ───────────────────────────────────────────────────────
 
@@ -240,6 +252,8 @@ class TelegramBot:
                                 self.handle_message(update["message"])
                             elif "callback_query" in update:
                                 self.handle_callback(update["callback_query"])
+                            elif "inline_query" in update:
+                                self.handle_inline_query(update["inline_query"])
                         except Exception as e:
                             logger.error(f"update handling error: {e}")
 
@@ -413,6 +427,69 @@ class TelegramBot:
                     os.remove(filename)
             except Exception:
                 pass
+
+    def handle_inline_query(self, inline_query: Dict):
+        """Обработчик инлайн-запросов (@юзбота <айди>)."""
+        query_id = inline_query["id"]
+        query_text = inline_query.get("query", "").strip()
+        
+        try:
+            results, error = build_inline_results(self.inline_handler, query_text)
+            
+            # Если есть ошибка и нет результатов — показываем сообщение об ошибке
+            if not results and error:
+                results = [
+                    {
+                        "type": "article",
+                        "id": "error",
+                        "title": "❌ Ошибка",
+                        "description": error,
+                        "input_message_content": {
+                            "message_text": error,
+                            "parse_mode": "HTML"
+                        }
+                    }
+                ]
+            
+            # Если нет результатов и нет ошибки — показываем подсказку
+            if not results:
+                results = [
+                    {
+                        "type": "article",
+                        "id": "help",
+                        "title": "💡 Подсказка",
+                        "description": "Введите числовой Telegram ID",
+                        "input_message_content": {
+                            "message_text": (
+                                "<b>Как использовать инлайн-режим:</b>\n\n"
+                                "Напишите в поле поиска:\n"
+                                "<code>@regdatrobot 123456789</code>\n\n"
+                                "или просто ID:\n"
+                                "<code>@regdatrobot 123456789</code>\n\n"
+                                "Результат появится в списке результатов."
+                            ),
+                            "parse_mode": "HTML"
+                        }
+                    }
+                ]
+            
+            self.answer_inline_query(query_id, results)
+        
+        except Exception as e:
+            logger.error(f"inline query error: {e}")
+            error_result = [
+                {
+                    "type": "article",
+                    "id": "error",
+                    "title": "⚠️ Ошибка обработки",
+                    "description": "Попробуйте позже",
+                    "input_message_content": {
+                        "message_text": f"Произошла ошибка при обработке запроса: {str(e)}",
+                        "parse_mode": "HTML"
+                    }
+                }
+            ]
+            self.answer_inline_query(query_id, error_result)
 
 
 def run():

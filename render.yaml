@@ -1,17 +1,27 @@
 services:
   - type: web
-    name: telegram-bots
+    name: unified-telegram-bots
     env: python
-    buildCommand: pip install -r requirements.txt
+    plan: free
+    pythonVersion: 3.11
     startCommand: python main.py
     envVars:
+      - key: PORT
+        value: 8080
       - key: BOT_TOKEN
-        sync: false          # токен бота "сингулярное ядро + GRAM экономика"
+        sync: false
       - key: BOT_TOKEN_DATA
-        sync: false          # токен бота "регистрационный анализ" (/reg1 и т.д.)
-      - key: ADMIN_ID_DATA
-        sync: false          # ваш telegram id — доступ к админ-панели regbot
-    disk:
-      name: bots-data
-      mountPath: /opt/render/project/src/data
-      sizeGB: 1
+        sync: false
+      - key: BOT_TOKEN_PROFILE
+        sync: false
+      - key: BOT_TOKEN_CUM
+        sync: false
+      - key: ADMIN_IDS
+        sync: false
+      - key: CUMBOT_DB_PATH
+        value: /var/data/cumbot.db
+      - key: REGBOT_REPORTS_DIR
+        value: /var/data/reports
+    buildCommand: pip install -r requirements.txt
+    healthCheckPath: /health
+    healthCheckInterval: 120
